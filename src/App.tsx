@@ -3,6 +3,7 @@ import './App.css';
 import {useForm} from "react-hook-form";
 import {useWebSocket} from "react-use-websocket/dist/lib/use-websocket";
 import {ReadyState} from "react-use-websocket/dist";
+import {Button} from '@material-ui/core'
 
 const baseUrl = "localhost:8080"
 
@@ -62,8 +63,10 @@ function App() {
                  src={meme.imgBase64 ?? meme.imgSrc ?? "https://image.shutterstock.com/image-vector/no-sign-isolated-on-white-260nw-323390270.jpg"}/>
             {meme.text && <div>{meme.text}</div>}
             <div>{"Author: " + meme.author}</div>
-            <div onClick={() => deleteMeme(meme.id)}>Delete</div>
-            <div onClick={() => likeMeme(meme.id)}>Like {meme.likes != null ? meme.likes : '0'}</div>
+            <div style={{margin: "5px"}}><Button variant="contained" color="primary"
+                                                       onClick={() => likeMeme(meme.id)}>Like {meme.likes != null ? meme.likes : '0'}</Button>
+            </div>
+            <div><Button variant="contained" color="secondary" onClick={() => deleteMeme(meme.id)}>Delete</Button></div>
             <div style={{marginBottom: "40px"}}/>
         </div>)}
 
