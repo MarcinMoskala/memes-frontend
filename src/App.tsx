@@ -10,7 +10,7 @@ const baseUrl = "localhost:8080"
 function App() {
     const [memes, setMemes] = useState<Memes>();
     const [image, setImage] = useState<string>();
-    const {sendMessage, lastMessage, readyState,} = useWebSocket(`ws://${baseUrl}/ws`);
+    const {lastMessage, readyState,} = useWebSocket(`ws://${baseUrl}/ws`);
     const {register, handleSubmit, errors} = useForm<Meme>();
 
     useEffect(() => {
@@ -61,36 +61,37 @@ function App() {
             {meme.title && <h1>{meme.title}</h1>}
             <img alt="meme"
                  src={meme.imgBase64 ?? meme.imgSrc ?? "https://image.shutterstock.com/image-vector/no-sign-isolated-on-white-260nw-323390270.jpg"}/>
-            {meme.text && <div>{meme.text}</div>}
-            <div>{"Author: " + meme.author}</div>
+            {meme.text && <div>{"Komentarz: " + meme.text}</div>}
+            <div>{"Autor: " + meme.author}</div>
             <div style={{margin: "5px"}}><Button variant="contained" color="primary"
-                                                       onClick={() => likeMeme(meme.id)}>Like {meme.likes != null ? meme.likes : '0'}</Button>
+                                                 onClick={() => likeMeme(meme.id)}>👍 Like {meme.likes != null ? meme.likes : '0'}</Button>
             </div>
-            <div><Button variant="contained" color="secondary" onClick={() => deleteMeme(meme.id)}>Delete</Button></div>
+            <div><Button variant="contained" color="secondary" onClick={() => deleteMeme(meme.id)}>Usuń</Button></div>
             <div style={{marginBottom: "40px"}}/>
         </div>)}
 
         <form onSubmit={handleSubmit(sendMeme)}>
             {image && <img src={image}/>}
             <fieldset>
-                <div>
-                    <label htmlFor="author">Autor</label>
+                <div style={{marginBottom: "5px"}}>
+                    <label htmlFor="author">Autor: </label>
                     <input type="text" name="author" id="author" ref={register({required: "Wymagane"})}/>
                     {errors.author && errors.author.message}
                 </div>
-
-                <input type="file" onChange={addImage}/>
-
+                <div style={{marginBottom: "5px"}}>
+                    <label>Wstaw mema z pliku: </label>
+                    <input type="file" onChange={addImage}/>
+                </div>
                 {!image &&
-                <div>
-                    <label htmlFor="imgSrc">Img src</label>
+                <div style={{marginBottom: "5px"}}>
+                    <label htmlFor="imgSrc"> lub daj link do mema: </label>
                     <input type="text" name="imgSrc" id="imgSrc" ref={register({required: "Wymagane"})}/>
                     {errors.imgSrc && errors.imgSrc.message}
                 </div>
                 }
 
-                <div>
-                    <label htmlFor="text">Komentarz</label>
+                <div style={{marginBottom: "5px"}}>
+                    <label htmlFor="text">Komentarz: </label>
                     <input type="text" name="text" id="senderName" ref={register()}/>
                     {errors.text && errors.text.message}
                 </div>
