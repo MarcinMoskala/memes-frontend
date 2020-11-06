@@ -10,11 +10,8 @@ function App() {
     const {register, handleSubmit, errors} = useForm<Meme>();
 
     useEffect(() => {
-        console.log("Last message ", lastMessage)
-        console.log("Last message data ", lastMessage?.data)
         if (lastMessage && lastMessage?.data) {
             let memes = JSON.parse(lastMessage.data);
-            console.log("Setting memes ", memes)
             setMemes(memes)
         }
     }, [lastMessage])
