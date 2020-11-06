@@ -37,6 +37,13 @@ function App() {
         })
     }
 
+    const likeMeme = (memeId: string) => {
+        fetch(`http://${baseUrl}/meme/${memeId}`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json",}
+        })
+    }
+
     const addImage = (event: any) => {
         let file = event.target.files[0];
         var reader = new FileReader();
@@ -56,6 +63,7 @@ function App() {
             {meme.text && <div>{meme.text}</div>}
             <div>{"Author: " + meme.author}</div>
             <div onClick={() => deleteMeme(meme.id)}>Delete</div>
+            <div onClick={() => likeMeme(meme.id)}>Like {meme.likes != null ? meme.likes : '0'}</div>
             <div style={{marginBottom: "40px"}}/>
         </div>)}
 
@@ -105,6 +113,7 @@ type Meme = {
     imgBase64: string | null,
     text: string | null,
     imgSrc: string | null,
+    likes: number | null,
 }
 
 const urlToData = (url: string) => fetch(url)
